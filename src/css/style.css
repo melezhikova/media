@@ -1,0 +1,82 @@
+body {
+  color: rgb(71, 70, 70);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 700px;
+  height: 600px;
+  padding: 20px;
+  border: 1px dashed black;
+  background-color: rgb(247, 246, 248);
+  position: relative;
+}
+
+.messagesBox {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.msg {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.msgTime {
+  font-size: 14px;
+  text-align: end;
+}
+
+.msgBody {
+  font-size: 20px;
+}
+
+.msgCoords {
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.messageForm {
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+}
+
+.messageInput {
+  width: 100%;
+  padding: 7px;
+  box-sizing: border-box;
+}
+
+.modal {
+  visibility: hidden;
+  position: absolute;
+  width: 50%;
+  background-color: #f3ebeb;
+  padding: 20px;
+  left: 25%;
+  z-index: 1;
+}
+
+.active {
+  visibility: visible;
+}
+
+.modalText {
+  margin-bottom: 20px;
+}
+
+.location, .btn {
+  padding: 5px;
+}
+
