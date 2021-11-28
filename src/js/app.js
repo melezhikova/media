@@ -10,28 +10,31 @@ const input = document.querySelector('.messageInput');
 
 load();
 
-let latitude; let
-  longitude;
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      latitude = position.coords.latitude;
-      longitude = position.coords.longitude;
-    }, (error) => {
-      console.log(error);
-    },
-  );
-}
-
 form.addEventListener('submit', (event) => {
   event.preventDefault();
   const { value } = input;
   const time = getTime();
   let coords = null;
-  if (latitude && longitude) {
-    coords = `[${latitude}, -${longitude}]`;
-    createMessage(time, value, coords);
+  if (navigator.geolocation) {
+    const locationCoords = () => new Promise(((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          console.log(position);
+          resolve(position);
+        }, (error) => {
+          console.log(error);
+          reject(getLocation(time, value));
+          console.log('1');
+        },
+      );
+    }));
+
+    locationCoords().then((position) => {
+      coords = `[${position.coords.latitude}, -${position.coords.longitude}]`;
+      createMessage(time, value, coords);
+    });
   } else {
+    console.log('2');
     getLocation(time, value);
   }
 });
