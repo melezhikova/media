@@ -1,30 +1,35 @@
 // TODO: write your code here
 import getTime from './time';
-import { getLocation } from './location';
 import load from './loading';
+import getCoords from './coords';
 import createMessage from './createMessage';
 
 // localStorage.removeItem('messages');
 const form = document.querySelector('#form');
-const input = document.querySelector('.messageInput');
+const modal = document.querySelector('.modal');
+const inputMessage = document.querySelector('.messageInput');
+const inputModal = document.querySelector('.location');
 
 load();
 
+function getLocation() {
+  modal.classList.add('active');
+  inputModal.focus();
+}
+
 form.addEventListener('submit', (event) => {
   event.preventDefault();
-  const { value } = input;
+  const { value } = inputMessage;
   const time = getTime();
   let coords = null;
   if (navigator.geolocation) {
     const locationCoords = () => new Promise(((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          console.log(position);
           resolve(position);
         }, (error) => {
           console.log(error);
-          reject(getLocation(time, value));
-          console.log('1');
+          reject(getLocation());
         },
       );
     }));
@@ -34,7 +39,30 @@ form.addEventListener('submit', (event) => {
       createMessage(time, value, coords);
     });
   } else {
-    console.log('2');
     getLocation(time, value);
   }
+});
+
+const locationForm = document.querySelector('.locationForm');
+locationForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const time = getTime();
+  const { value } = inputMessage;
+  if (inputModal.value.includes(',')) {
+    const inputed = getCoords(inputModal.value);
+    if (inputed === false) {
+      alert('Проверьте правильность ввода');
+    } else {
+      modal.classList.remove('active');
+      createMessage(time, value, inputed);
+      inputModal.value = '';
+    }
+  } else {
+    alert('Проверьте правильность ввода');
+  }
+});
+
+const cancel = document.querySelector('.cancel');
+cancel.addEventListener('click', () => {
+  modal.classList.remove('active');
 });

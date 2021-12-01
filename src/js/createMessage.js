@@ -7,4 +7,5 @@ export default function createMessage(time, value, coords) {
   message.addMessageToDOM(message);
   input.value = '';
   save(message);
+  input.focus();
 }
